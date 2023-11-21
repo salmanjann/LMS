@@ -2,17 +2,21 @@ package com.example.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class LoginController {
+
+
    @FXML
     private Button loginCancelButton;
    @FXML
@@ -22,6 +26,40 @@ public class LoginController {
    @FXML
    private PasswordField loginPasswordField;
 
+   @FXML
+   private RadioButton loginRadioAdmin,loginRadioTeacher,loginRadioStudent;
+
+    private void switchToAdminScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("AdminDashboard.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Stage adminStage = new Stage();  // Create a new Stage
+        adminStage.initStyle(StageStyle.UNDECORATED);
+        adminStage.setScene(new Scene(root, 520, 400));
+        adminStage.show();
+        Stage stage = (Stage) loginCancelButton.getScene().getWindow();
+        stage.close();
+    }
+
+    private void switchToTeacherScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("TeacherDashboard.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Stage teacherStage = new Stage();  // Create a new Stage
+        teacherStage.initStyle(StageStyle.UNDECORATED);
+        teacherStage.setScene(new Scene(root, 520, 400));
+        teacherStage.show();
+    }
+
+    private void switchToStudentScene() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("StudentDashboard.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Stage studentStage = new Stage();  // Create a new Stage
+        studentStage.initStyle(StageStyle.UNDECORATED);
+        studentStage.setScene(new Scene(root, 520, 400));
+        studentStage.show();
+    }
    public  void loginAction(ActionEvent e){
        if(loginUsernameField.getText().isBlank() == false && loginPasswordField.getText().isBlank() == false){
             validateLogin();
@@ -47,15 +85,42 @@ public class LoginController {
 
         // Check if the connection is successful
         if (connectDB != null) {
-            String verifyLogin = "SELECT COUNT(1) FROM loginTable WHERE username = '" + loginUsernameField.getText() + "' AND `password` = '" + loginPasswordField.getText() + "'";
+            String table = "`ADMIN`";
+            if(loginRadioAdmin.isSelected() == true){
+                table = "`ADMIN`";
+            }
+            else if(loginRadioTeacher.isSelected() == true){
+                table = "`TEACHER`";
+            }
+            else if(loginRadioStudent.isSelected() == true){
+                table = "`STUDENT`";
+            }
+
+            String verifyLogin = "SELECT COUNT(1) FROM " + table + " WHERE (username = '" + loginUsernameField.getText() + "' OR email = '" + loginUsernameField.getText() + "')AND `password` = '" + loginPasswordField.getText() + "'";
+
 
             try {
                 Statement statement = connectDB.createStatement();
                 ResultSet queryResult = statement.executeQuery(verifyLogin);
 
-                while (queryResult.next()) {
+                if (queryResult.next()) {
                     if (queryResult.getInt(1) == 1) {
-                        loginLoginMessage.setText("Welcome!");
+                        if(loginRadioAdmin.isSelected() == true){
+                            loginLoginMessage.setText("");
+                            // admin details
+                            // admin object
+                            // applicationstate = admin object
+                            switchToAdminScene();
+                        }
+                        else if(loginRadioTeacher.isSelected() == true){
+                            loginLoginMessage.setText("");
+                            switchToTeacherScene();
+                        }
+                        else if(loginRadioStudent.isSelected() == true){
+                            loginLoginMessage.setText("");
+                            switchToStudentScene();
+                        }
+
                     } else {
                         loginLoginMessage.setText("Invalid Login!");
                     }
@@ -67,4 +132,5 @@ public class LoginController {
             loginLoginMessage.setText("Connection failed. Check database settings.");
         }
     }
+
 }

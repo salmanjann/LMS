@@ -6,7 +6,7 @@ public class DatabaseConnection {
     public Connection DatabaseLink;
 
     public  Connection getConnection(){
-        String dbName = "testing_login";
+        String dbName = "LMS";
         String dbUser = "root";
         String dbPassword = "root";
         String url = "jdbc:mysql://localhost:3306/" + dbName;
