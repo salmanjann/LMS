@@ -146,11 +146,12 @@ public class LoginController implements Initializable {
             Statement statement = ApplicationState.connectDB.createStatement();
             ResultSet queryResult = statement.executeQuery(getAdmin);
             if (queryResult.next()) {
+                int id = queryResult.getInt(1);
                 String name = queryResult.getString(2);
                 String username = queryResult.getString(3);
                 String email = queryResult.getString(4);
                 String password = queryResult.getString(5);
-                Admin admin = new Admin(name,username,email,password);
+                Admin admin = new Admin(id, name,username,email,password);
                 ApplicationState.currentlyLoggedIn = admin;
 //                ApplicationState.currentlyLoggedIn.addTeacher();
             }

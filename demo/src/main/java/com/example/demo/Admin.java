@@ -8,8 +8,8 @@ public class Admin extends User{
         super();
     }
     // No attributes now
-    public  Admin(String _name,String _username, String _email, String _password){
-        super(_name,_username,_email,_password);
+    public  Admin(int _id, String _name,String _username, String _email, String _password){
+        super(_id, _name,_username,_email,_password);
     }
     public String addTeacher(String _name, String _email, String _username, String _password){
         String isTeacherExist = "SELECT COUNT(1) FROM `TEACHER` WHERE username = '" + _username + "' OR email = '" + _email + "'";
@@ -34,5 +34,17 @@ public class Admin extends User{
             e.printStackTrace();
         }
         return "New Teacher Added";
+    }
+
+    public String assignCourseToTeacher(int courseId, int teacherId){
+        String insertTeacherCourse = "insert into TeacherCourse (courseId, userId) value (" + courseId + ", " + teacherId + ");";
+        try {
+            Statement statement = ApplicationState.connectDB.createStatement();
+            statement.executeUpdate(insertTeacherCourse);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Course Assigned to Teacher";
     }
 }
