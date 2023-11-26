@@ -73,7 +73,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <RadioButton fx:id="loginRadioStudent" layoutX="113.0" layoutY="237.0" mnemonicParsing="false" text="Student" toggleGroup="$Users">
+            <RadioButton fx:id="loginRadioStudent" layoutX="113.0" layoutY="237.0" mnemonicParsing="false" selected="true" text="Student" toggleGroup="$Users">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

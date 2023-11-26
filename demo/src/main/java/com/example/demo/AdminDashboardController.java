@@ -188,7 +188,7 @@ public class AdminDashboardController implements  Initializable {
 
         teachersMenu.setItems(teachers);
 
-        teachersMenu.setOnAction(g -> handleTeacherSelection());
+        /*teachersMenu.setOnAction(g -> handleTeacherSelection());*/
     }
 
     public void assignAction(ActionEvent e) throws SQLException {
@@ -198,10 +198,6 @@ public class AdminDashboardController implements  Initializable {
         assignCoursesPane(null);
     }
 
-    private void handleTeacherSelection() {
-        Teacher selectedTeacher = teachersMenu.getValue();
-        if (selectedTeacher != null) {
-
-        }
-    }
+    /*private void handleTeacherSelection() {
+    }*/
 }
