@@ -66,11 +66,17 @@
                <font>
                   <Font name="Calibri" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="addTPCancelButton" layoutX="130.0" layoutY="320.0" mnemonicParsing="false" onAction="#cancelTeacherButton" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #263F73;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Label fx:id="addTPLabel" layoutX="130.0" layoutY="52.0" textFill="RED" />
          </children>
@@ -82,7 +88,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="adminDashCancel" layoutX="18.0" layoutY="254.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
+            <Button fx:id="adminDashCancel" layoutX="18.0" layoutY="254.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>

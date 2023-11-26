@@ -52,11 +52,17 @@
                <font>
                   <Font size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="loginCancelButton" layoutX="31.0" layoutY="323.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: #263F73;" text="Cancel" textFill="#fffdfd">
                <font>
                   <Font size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Label fx:id="loginLoginMessage" layoutX="112.0" layoutY="110.0" prefHeight="17.0" prefWidth="145.0" textFill="#eb0000" />
             <RadioButton fx:id="loginRadioAdmin" layoutX="31.0" layoutY="237.0" mnemonicParsing="false" selected="true" text="Admin" textFill="#020202">

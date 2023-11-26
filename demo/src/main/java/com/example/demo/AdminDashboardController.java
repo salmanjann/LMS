@@ -2,6 +2,9 @@ package com.example.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -9,7 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -64,19 +69,45 @@ public class AdminDashboardController implements  Initializable {
 
     public void addTeacherButton(ActionEvent e){
         String name, email,username,password;
-        name = addTPName.getText();
-        email = addTPEmail.getText();
-        username = addTPUsername.getText();
-        password = addTPPassword.getText();
-        String msg = ApplicationState.currentlyLoggedIn.addTeacher(name,email,username,password);
-        addTPLabel.setText(msg);
+        if(addTPName.getText().isBlank() == false && addTPEmail.getText().isBlank() == false && addTPUsername.getText().isBlank() == false && addTPPassword.getText().isBlank() == false){
+            name = addTPName.getText();
+            email = addTPEmail.getText();
+            username = addTPUsername.getText();
+            password = addTPPassword.getText();
+            String msg = ApplicationState.currentlyLoggedIn.addTeacher(name,email,username,password);
+            addTPLabel.setText(msg);
+        }
+        else{
+            addTPLabel.setText("Fill all fields");
+        }
+
     }
 
     public void cancelTeacherButton(ActionEvent e){
+        addTPName.setText("");
+        addTPEmail.setText("");
+        addTPUsername.setText("");
+        addTPPassword.setText("");
 
     }
-    public void cancelAction(ActionEvent e){
-        Stage stage = (Stage) adminDashCancel.getScene().getWindow();
-        stage.close();
+    private void switchToLoginScene(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("login.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage studentStage = new Stage();  // Create a new Stage
+            studentStage.initStyle(StageStyle.UNDECORATED);
+            studentStage.setScene(new Scene(root, 520, 400));
+            studentStage.show();
+            Stage stage = (Stage) adminDashCancel.getScene().getWindow();
+            stage.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    public void Logout(ActionEvent e){
+        switchToLoginScene();
     }
 }

@@ -68,6 +68,7 @@ public class LoginController implements Initializable {
         studentStage.setScene(new Scene(root, 520, 400));
         studentStage.show();
    }
+
    public  void loginAction(ActionEvent e){
        if(loginUsernameField.getText().isBlank() == false && loginPasswordField.getText().isBlank() == false){
             validateLogin();
