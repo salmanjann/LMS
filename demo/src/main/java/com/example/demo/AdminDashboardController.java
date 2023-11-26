@@ -17,9 +17,7 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,7 +64,7 @@ public class AdminDashboardController implements  Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        adminName.setText("Welcome "+ ApplicationState.currentlyLoggedIn.getName() + " !");
+        adminName.setText("Welcome "+ ApplicationState.currentlyLoggedAdmin.getName() + " !");
     }
     public void dashboardPane(ActionEvent e){
         adminDashPane.setVisible(true);
@@ -96,7 +94,7 @@ public class AdminDashboardController implements  Initializable {
             email = addTPEmail.getText();
             username = addTPUsername.getText();
             password = addTPPassword.getText();
-            String msg = ApplicationState.currentlyLoggedIn.addTeacher(name,email,username,password);
+            String msg = ApplicationState.currentlyLoggedAdmin.addTeacher(name,email,username,password);
             addTPLabel.setText(msg);
         }
         else{
@@ -194,7 +192,7 @@ public class AdminDashboardController implements  Initializable {
     }
 
     public void assignAction(ActionEvent e) throws SQLException {
-        String msg = ApplicationState.currentlyLoggedIn.assignCourseToTeacher(coursesMenu.getValue().getCourseId(), teachersMenu.getValue().getId());
+        String msg = ApplicationState.currentlyLoggedAdmin.assignCourseToTeacher(coursesMenu.getValue().getCourseId(), teachersMenu.getValue().getId());
         assignCourseLabel.setText(msg);
         teachersMenu.getSelectionModel().clearSelection();
         assignCoursesPane(null);

@@ -12,7 +12,6 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -57,6 +56,8 @@ public class LoginController implements Initializable {
         teacherStage.initStyle(StageStyle.UNDECORATED);
         teacherStage.setScene(new Scene(root, 520, 400));
         teacherStage.show();
+       Stage stage = (Stage) loginCancelButton.getScene().getWindow();
+       stage.close();
    }
 
    private void switchToStudentScene() throws IOException {
@@ -67,6 +68,8 @@ public class LoginController implements Initializable {
         studentStage.initStyle(StageStyle.UNDECORATED);
         studentStage.setScene(new Scene(root, 520, 400));
         studentStage.show();
+       Stage stage = (Stage) loginCancelButton.getScene().getWindow();
+       stage.close();
    }
 
    public  void loginAction(ActionEvent e){
@@ -118,10 +121,12 @@ public class LoginController implements Initializable {
                         }
                         else if(loginRadioTeacher.isSelected() == true){
                             loginLoginMessage.setText("");
+                            createTeacher();
                             switchToTeacherScene();
                         }
                         else if(loginRadioStudent.isSelected() == true){
                             loginLoginMessage.setText("");
+                            createStudent();
                             switchToStudentScene();
                         }
 
@@ -138,8 +143,6 @@ public class LoginController implements Initializable {
     }
     private  void createAdmin(){
         String getAdmin = "SELECT * FROM `ADMIN` WHERE username = '" + loginUsernameField.getText() + "'";
-
-
         try {
             Statement statement = ApplicationState.connectDB.createStatement();
             ResultSet queryResult = statement.executeQuery(getAdmin);
@@ -150,8 +153,46 @@ public class LoginController implements Initializable {
                 String email = queryResult.getString(4);
                 String password = queryResult.getString(5);
                 Admin admin = new Admin(id, name,username,email,password);
-                ApplicationState.currentlyLoggedIn = admin;
-//                ApplicationState.currentlyLoggedIn.addTeacher();
+                ApplicationState.currentlyLoggedAdmin = admin;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private  void createTeacher(){
+        String getAdmin = "SELECT * FROM `TEACHER` WHERE username = '" + loginUsernameField.getText() + "'";
+        try {
+            Statement statement = ApplicationState.connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(getAdmin);
+            if (queryResult.next()) {
+                int id = queryResult.getInt(1);
+                String name = queryResult.getString(2);
+                String username = queryResult.getString(3);
+                String email = queryResult.getString(4);
+                String password = queryResult.getString(5);
+                Teacher teacher = new Teacher(id, name,username,email,password);
+                ApplicationState.currentlyLoggedTeacher = teacher;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private  void createStudent(){
+        String getAdmin = "SELECT * FROM `STUDENT` WHERE username = '" + loginUsernameField.getText() + "'";
+        try {
+            Statement statement = ApplicationState.connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(getAdmin);
+            if (queryResult.next()) {
+                int id = queryResult.getInt(1);
+                String name = queryResult.getString(2);
+                String username = queryResult.getString(3);
+                String email = queryResult.getString(4);
+                String password = queryResult.getString(5);
+                String rollNo = queryResult.getString(6);
+
+                Student student = new Student(id, name,username,email,password,rollNo);
+                ApplicationState.currentlyLoggedStudent = student;
             }
         } catch (Exception e) {
             e.printStackTrace();
