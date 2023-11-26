@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.stage.StageStyle;
+import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -24,6 +25,18 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController implements  Initializable {
+    @FXML
+    public AnchorPane approveCoursesPane;
+    @FXML
+    public ComboBox approveCoursesMenu;
+    @FXML
+    public ComboBox approveTeachersMenu;
+    @FXML
+    public Button approveBtn;
+    @FXML
+    public Label approveCourseLabel;
+    @FXML
+    public CheckComboBox sutdentsMenu;
     @FXML
     private Button adminDashCancel;
     @FXML
@@ -71,6 +84,7 @@ public class AdminDashboardController implements  Initializable {
         adminAddCoursePane.setVisible(false);
         adminAddTeacherPane.setVisible(false);
         assignCoursesPane.setVisible(false);
+        approveCoursesPane.setVisible(false);
     }
 
     public void addCoursePane(ActionEvent e){
@@ -78,6 +92,7 @@ public class AdminDashboardController implements  Initializable {
         adminAddCoursePane.setVisible(true);
         adminAddTeacherPane.setVisible(false);
         assignCoursesPane.setVisible(false);
+        approveCoursesPane.setVisible(false);
     }
 
     public void addTeacherPane(ActionEvent e){
@@ -85,6 +100,7 @@ public class AdminDashboardController implements  Initializable {
         adminAddCoursePane.setVisible(false);
         adminAddTeacherPane.setVisible(true);
         assignCoursesPane.setVisible(false);
+        approveCoursesPane.setVisible(false);
     }
 
     public void addTeacherButton(ActionEvent e){
@@ -188,7 +204,6 @@ public class AdminDashboardController implements  Initializable {
 
         teachersMenu.setItems(teachers);
 
-        /*teachersMenu.setOnAction(g -> handleTeacherSelection());*/
     }
 
     public void assignAction(ActionEvent e) throws SQLException {
@@ -198,6 +213,11 @@ public class AdminDashboardController implements  Initializable {
         assignCoursesPane(null);
     }
 
-    /*private void handleTeacherSelection() {
-    }*/
+    public void approveCourses(ActionEvent e) {
+        adminDashPane.setVisible(false);
+        adminAddCoursePane.setVisible(false);
+        adminAddTeacherPane.setVisible(false);
+        assignCoursesPane.setVisible(false);
+        approveCoursesPane.setVisible(true);
+    }
 }
