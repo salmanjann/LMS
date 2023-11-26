@@ -6,8 +6,8 @@ public class Student extends  User{
         super();
         rollNo = "";
     }
-    public  Student(String _name,String _username, String _email, String _password,String _rollNo){
-        super(_name,_username,_email,_password);
+    public  Student(int _id, String _name,String _username, String _email, String _password,String _rollNo){
+        super(_id, _name,_username,_email,_password);
         rollNo = _rollNo;
     }
 }

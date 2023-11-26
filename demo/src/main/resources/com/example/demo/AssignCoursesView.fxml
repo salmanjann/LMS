@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.AssignCoursesController">
+   <children>
+      <ComboBox fx:id="coursesMenu" layoutX="32.0" layoutY="89.0" prefWidth="150.0" promptText="Choose Course" />
+      <ComboBox fx:id="teachersMenu" layoutX="225.0" layoutY="89.0" prefWidth="150.0" promptText="Choose Teacher" />
+   </children>
+</AnchorPane>

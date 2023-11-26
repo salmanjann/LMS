@@ -48,7 +48,7 @@
             </Label>
             <TextField fx:id="loginUsernameField" centerShape="false" layoutX="110.0" layoutY="138.0" promptText="username or email" />
             <PasswordField fx:id="loginPasswordField" layoutX="110.0" layoutY="187.0" promptText="password" />
-            <Button fx:id="loginLoginButton" layoutX="31.0" layoutY="272.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: #263F73;" text="Login" textFill="#fffdfd">
+            <Button fx:id="loginLoginButton" defaultButton="true" layoutX="31.0" layoutY="272.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: #263F73;" text="Login" textFill="#fffdfd">
                <font>
                   <Font size="14.0" />
                </font>
@@ -56,7 +56,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="loginCancelButton" layoutX="31.0" layoutY="323.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: #263F73;" text="Cancel" textFill="#fffdfd">
+            <Button fx:id="loginCancelButton" cancelButton="true" layoutX="31.0" layoutY="323.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="227.0" style="-fx-background-color: #263F73;" text="Cancel" textFill="#fffdfd">
                <font>
                   <Font size="14.0" />
                </font>
