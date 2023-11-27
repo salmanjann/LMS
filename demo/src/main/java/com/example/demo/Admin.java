@@ -1,31 +1,35 @@
 package com.example.demo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Admin extends User{
-    public Admin(){
+public class Admin extends User {
+    public Admin() {
         super();
     }
+
     // No attributes now
-    public  Admin(int _id, String _name,String _username, String _email, String _password){
-        super(_id, _name,_username,_email,_password);
+    public Admin(int _id, String _name, String _username, String _email, String _password) {
+        super(_id, _name, _username, _email, _password);
     }
-    public String addTeacher(String _name, String _email, String _username, String _password){
+
+    public String addTeacher(String _name, String _email, String _username, String _password) {
         String isTeacherExist = "SELECT COUNT(1) FROM `TEACHER` WHERE username = '" + _username + "' OR email = '" + _email + "'";
-        String insertTeacher = "insert into `TEACHER`(`name`, username,email,`password`) value ('"+_name+"','"+_username+"','" + _email + "','"+_password+"');";
+        String insertTeacher = "insert into `TEACHER`(`name`, username,email,`password`) value ('" + _name + "','" + _username + "','" + _email + "','" + _password + "');";
 
         try {
             Statement statement = ApplicationState.connectDB.createStatement();
             ResultSet queryResult = statement.executeQuery(isTeacherExist);
 
 
-
             if (queryResult.next()) {
                 if (queryResult.getInt(1) == 1) {
                     return "Teacher Exists";
-                }
-                else {
+                } else {
                     Statement statement2 = ApplicationState.connectDB.createStatement();
                     statement2.executeUpdate(insertTeacher);
                 }
@@ -36,15 +40,70 @@ public class Admin extends User{
         return "New Teacher Added";
     }
 
-    public String assignCourseToTeacher(int courseId, int teacherId){
+    public String assignCourseToTeacher(int courseId, int teacherId) {
         String insertTeacherCourse = "insert into TeacherCourse (courseId, userId) value (" + courseId + ", " + teacherId + ");";
         try {
             Statement statement = ApplicationState.connectDB.createStatement();
             statement.executeUpdate(insertTeacherCourse);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "Course Assigned to Teacher";
+    }
+
+    public ObservableList<Course> getCourses(String sql) throws SQLException {
+        Statement statement = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = statement.executeQuery(sql);
+
+        ObservableList<Course> courses = FXCollections.observableArrayList();
+
+        while (queryResult.next()) {
+            Course course = new Course(
+                    queryResult.getInt("courseId"),
+                    queryResult.getString("name"),
+                    queryResult.getString("description")
+            );
+            courses.add(course);
+        }
+        return courses;
+    }
+
+    public ObservableList<Teacher> getTeachers(String sql) throws SQLException {
+        Statement statement = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = statement.executeQuery(sql);
+
+        ObservableList<Teacher> teachers = FXCollections.observableArrayList();
+
+        while (queryResult.next()) {
+            Teacher teacher = new Teacher(
+                    queryResult.getInt("id"),
+                    queryResult.getString("name"),
+                    queryResult.getString("username"),
+                    queryResult.getString("email"),
+                    queryResult.getString("password")
+            );
+            teachers.add(teacher);
+        }
+        return teachers;
+    }
+
+    public ObservableList<Student> getStudents(String sql) throws SQLException {
+        Statement statement = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = statement.executeQuery(sql);
+
+        ObservableList<Student> students = FXCollections.observableArrayList();
+
+        while (queryResult.next()) {
+            Student student = new Student(
+                    queryResult.getInt("id"),
+                    queryResult.getString("name"),
+                    queryResult.getString("username"),
+                    queryResult.getString("email"),
+                    queryResult.getString("password"),
+                    queryResult.getString("rollNo")
+            );
+            students.add(student);
+        }
+        return students;
     }
 }

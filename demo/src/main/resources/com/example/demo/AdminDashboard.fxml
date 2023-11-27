@@ -104,10 +104,8 @@
                      <Font size="14.0" />
                   </font>
                </Label>
-
                <ComboBox fx:id="coursesMenu" layoutX="130.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Course" />
                <ComboBox fx:id="teachersMenu" layoutX="130.0" layoutY="130.0" prefWidth="150.0" promptText="Choose Teacher" />
-               <CheckComboBox fx:id = "sutdentsMenu" layoutX="130.0" layoutY="175.0" prefWidth="150.0"/>
                <Button fx:id="assignBtn" layoutX="130.0" layoutY="165.0" mnemonicParsing="false" onAction="#assignAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Assign" textFill="#FFFFFF">
                   <font>
                      <Font name="Calibri" size="15.0" />
@@ -142,8 +140,8 @@
 
                <ComboBox fx:id="approveCoursesMenu" layoutX="130.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Course" />
                <ComboBox fx:id="approveTeachersMenu" layoutX="130.0" layoutY="130.0" prefWidth="150.0" promptText="Choose Teacher" />
-
-               <Button fx:id="approveBtn" layoutX="130.0" layoutY="165.0" mnemonicParsing="false" onAction="#assignAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Approve Applications" textFill="#FFFFFF">
+               <CheckComboBox fx:id = "approveStudentsMenu" layoutX="130.0" layoutY="165.0" prefWidth="150.0"/>
+               <Button fx:id="approveBtn" layoutX="130.0" layoutY="200.0" mnemonicParsing="false" onAction="#assignAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Approve Applications" textFill="#FFFFFF">
                   <font>
                      <Font name="Calibri" size="15.0" />
                   </font>
@@ -202,7 +200,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashCancel21" layoutX="18.0" layoutY="307.0" mnemonicParsing="false" onAction="#approveCourses" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Approve Applications" textFill="#263f73">
+            <Button fx:id="adminDashCancel21" layoutX="18.0" layoutY="307.0" mnemonicParsing="false" onAction="#approveCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Approve Applications" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>

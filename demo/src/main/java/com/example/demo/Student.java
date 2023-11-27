@@ -14,6 +14,11 @@ public class Student extends  User{
         rollNo = _rollNo;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     public String studentApplyCourse(int courseId, int teacherId){
         String findTeacherCourse = "select * from teachercourse where courseid = " + courseId + " and userid = " + teacherId + ";";
         try {

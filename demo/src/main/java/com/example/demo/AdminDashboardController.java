@@ -36,7 +36,8 @@ public class AdminDashboardController implements  Initializable {
     @FXML
     public Label approveCourseLabel;
     @FXML
-    public CheckComboBox sutdentsMenu;
+    public CheckComboBox approveStudentsMenu;
+
     @FXML
     private Button adminDashCancel;
     @FXML
@@ -148,62 +149,29 @@ public class AdminDashboardController implements  Initializable {
     }
 
     public void assignCoursesPane(ActionEvent e) throws SQLException {
+        String sql = "SELECT courseId, name, description FROM Course";
         coursesMenu.setOnAction(null);
-
-        var sql = "SELECT courseId, name, description FROM Course";
-        Statement statement = ApplicationState.connectDB.createStatement();
-        ResultSet queryResult = statement.executeQuery(sql);
-
-        ObservableList<Course> courses = FXCollections.observableArrayList();
-
-        while (queryResult.next()) {
-            Course course = new Course(
-                    queryResult.getInt("courseId"),
-                    queryResult.getString("name"),
-                    queryResult.getString("description")
-            );
-            courses.add(course);
-        }
-
-
-        coursesMenu.setItems(courses);
-
+        coursesMenu.setItems(ApplicationState.currentlyLoggedAdmin.getCourses(sql));
         coursesMenu.setOnAction(f -> {
             try {
-                handleCourseSelection();
+                handleAssignCourseSelection();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
         });
-
+        adminDashPane.setVisible(false);
+        adminAddCoursePane.setVisible(false);
+        adminAddTeacherPane.setVisible(false);
         assignCoursesPane.setVisible(true);
+        approveCoursesPane.setVisible(false);
     }
 
-    private void handleCourseSelection() throws SQLException{
+    private void handleAssignCourseSelection() throws SQLException {
         Course selectedCourse = coursesMenu.getValue();
-
         int courseId = selectedCourse.getCourseId();
-        var sql = "SELECT Teacher.id, Teacher.name, Teacher.username, Teacher.email, Teacher.password " +
+        String sql = "SELECT Teacher.id, Teacher.name, Teacher.username, Teacher.email, Teacher.password " +
                 "FROM Teacher WHERE Teacher.id not in (select userid from TeacherCourse where courseId = " + courseId + ")";
-
-        Statement statement = ApplicationState.connectDB.createStatement();
-        ResultSet queryResult = statement.executeQuery(sql);
-
-        ObservableList<Teacher> teachers = FXCollections.observableArrayList();
-
-        while (queryResult.next()) {
-            Teacher teacher = new Teacher(
-                    queryResult.getInt("id"),
-                    queryResult.getString("name"),
-                    queryResult.getString("username"),
-                    queryResult.getString("email"),
-                    queryResult.getString("password")
-            );
-            teachers.add(teacher);
-        }
-
-        teachersMenu.setItems(teachers);
-
+        teachersMenu.setItems(ApplicationState.currentlyLoggedAdmin.getTeachers(sql));
     }
 
     public void assignAction(ActionEvent e) throws SQLException {
@@ -213,11 +181,49 @@ public class AdminDashboardController implements  Initializable {
         assignCoursesPane(null);
     }
 
-    public void approveCourses(ActionEvent e) {
+    public void approveCoursesPane(ActionEvent e) throws SQLException {
+        approveCoursesMenu.setOnAction(null);
+        String sql = "SELECT courseId, name, description FROM Course";
+        approveCoursesMenu.setItems(ApplicationState.currentlyLoggedAdmin.getCourses(sql));
+        approveCoursesMenu.setOnAction(f -> {
+            try {
+                handleApproveCourseSelection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         adminDashPane.setVisible(false);
         adminAddCoursePane.setVisible(false);
         adminAddTeacherPane.setVisible(false);
         assignCoursesPane.setVisible(false);
         approveCoursesPane.setVisible(true);
+    }
+
+    private void handleApproveCourseSelection() throws SQLException {
+        Course selectedCourse = (Course) approveCoursesMenu.getValue();
+        int courseId = selectedCourse.getCourseId();
+        String sql = "SELECT Teacher.id, Teacher.name, Teacher.username, Teacher.email, Teacher.password " +
+                "FROM Teacher WHERE Teacher.id in (select userid from TeacherCourse where courseId = " + courseId + ")";
+        approveTeachersMenu.setItems(ApplicationState.currentlyLoggedAdmin.getTeachers(sql));
+        approveTeachersMenu.setOnAction(f -> {
+            try {
+                handleApproveTeacherSelection();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void handleApproveTeacherSelection() throws SQLException {
+        Course selectedCourse = (Course) approveCoursesMenu.getValue();
+        Teacher selectedTeacher = (Teacher) approveTeachersMenu.getValue();
+        int courseId = selectedCourse.getCourseId();
+        int teacherId = selectedTeacher.getId();
+        String sql = "SELECT Student.id, Student.name, Student.username, Student.email, Student.password, Student.rollNo " +
+                "FROM Student WHERE Student.id in (SELECT userid FROM StudentTeacherCourse " +
+                "WHERE teacherCourseid in (SELECT id FROM teacherCourse WHERE courseId = " + courseId + " and userid = " +teacherId + "))";
+
+        approveStudentsMenu.getItems().addAll(ApplicationState.currentlyLoggedAdmin.getStudents(sql));
+
     }
 }
