@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,21 +23,22 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController implements  Initializable {
     @FXML
     public AnchorPane approveCoursesPane;
     @FXML
-    public ComboBox approveCoursesMenu;
+    private ComboBox<Course> approveCoursesMenu = new ComboBox<>();
     @FXML
-    public ComboBox approveTeachersMenu;
+    private ComboBox<Teacher> approveTeachersMenu = new ComboBox<Teacher>();
     @FXML
     public Button approveBtn;
     @FXML
     public Label approveCourseLabel;
     @FXML
-    public CheckComboBox approveStudentsMenu;
+    public CheckComboBox<Student> approveStudentsMenu = new CheckComboBox<Student>();
 
     @FXML
     private Button adminDashCancel;
@@ -200,6 +202,7 @@ public class AdminDashboardController implements  Initializable {
     }
 
     private void handleApproveCourseSelection() throws SQLException {
+        approveTeachersMenu.setOnAction(null);
         Course selectedCourse = (Course) approveCoursesMenu.getValue();
         int courseId = selectedCourse.getCourseId();
         String sql = "SELECT Teacher.id, Teacher.name, Teacher.username, Teacher.email, Teacher.password " +
@@ -218,12 +221,22 @@ public class AdminDashboardController implements  Initializable {
         Course selectedCourse = (Course) approveCoursesMenu.getValue();
         Teacher selectedTeacher = (Teacher) approveTeachersMenu.getValue();
         int courseId = selectedCourse.getCourseId();
-        int teacherId = selectedTeacher.getId();
+        int teacherId = selectedTeacher.getId();/*
+        List<Student> selectedStudents = new List<>();*/
         String sql = "SELECT Student.id, Student.name, Student.username, Student.email, Student.password, Student.rollNo " +
                 "FROM Student WHERE Student.id in (SELECT userid FROM StudentTeacherCourse " +
-                "WHERE teacherCourseid in (SELECT id FROM teacherCourse WHERE courseId = " + courseId + " and userid = " +teacherId + "))";
+                "WHERE teacherCourseid in (SELECT id FROM teacherCourse WHERE courseId = " + courseId + " and userid = " +teacherId + ") AND StudentTeacherCourse.approved = 0)";
 
         approveStudentsMenu.getItems().addAll(ApplicationState.currentlyLoggedAdmin.getStudents(sql));
 
+    }
+
+    public void approveAction(ActionEvent e) throws SQLException {
+        ObservableList<Student> studentsList = approveStudentsMenu.getCheckModel().getCheckedItems();
+        String msg = ApplicationState.currentlyLoggedAdmin.approveStudentApplication(approveCoursesMenu.getValue().getCourseId(), approveTeachersMenu.getValue().getId(), studentsList);
+        approveCourseLabel.setText(msg);
+        approveTeachersMenu.getSelectionModel().clearSelection();
+        approveStudentsMenu.getCheckModel().clearChecks();
+        approveCoursesPane(null);
     }
 }

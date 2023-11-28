@@ -3,9 +3,11 @@ package com.example.demo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 
 public class Admin extends User {
     public Admin() {
@@ -105,5 +107,23 @@ public class Admin extends User {
             students.add(student);
         }
         return students;
+    }
+
+    public String approveStudentApplication(int courseId, int teacherId, ObservableList<Student> students) throws SQLException {
+        int sectionCount = 0;
+        String approveApplicationsCall = "{CALL ApproveStudentsApplications(?,?,?)}";
+        CallableStatement statement = ApplicationState.connectDB.prepareCall(approveApplicationsCall);
+        int count = 0;
+        for (int i = 0; i < students.stream().count();i++)
+        {
+            Student student = students.get(i);
+            statement.setInt(1, teacherId);
+            statement.setInt(2, courseId);
+            statement.setInt(3, student.getId());
+
+            statement.executeQuery();
+        }
+
+        return "Application Approved";
     }
 }

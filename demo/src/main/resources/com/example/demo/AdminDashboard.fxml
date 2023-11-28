@@ -141,7 +141,7 @@
                <ComboBox fx:id="approveCoursesMenu" layoutX="130.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Course" />
                <ComboBox fx:id="approveTeachersMenu" layoutX="130.0" layoutY="130.0" prefWidth="150.0" promptText="Choose Teacher" />
                <CheckComboBox fx:id = "approveStudentsMenu" layoutX="130.0" layoutY="165.0" prefWidth="150.0"/>
-               <Button fx:id="approveBtn" layoutX="130.0" layoutY="200.0" mnemonicParsing="false" onAction="#assignAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Approve Applications" textFill="#FFFFFF">
+               <Button fx:id="approveBtn" layoutX="130.0" layoutY="200.0" mnemonicParsing="false" onAction="#approveAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Approve Applications" textFill="#FFFFFF">
                   <font>
                      <Font name="Calibri" size="15.0" />
                   </font>
