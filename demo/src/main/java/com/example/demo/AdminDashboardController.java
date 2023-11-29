@@ -70,13 +70,36 @@ public class AdminDashboardController implements  Initializable {
     private Label addTPLabel;
 
     @FXML
+    private  AnchorPane adminAddStudentPane;
+    @FXML
     private Label assignCourseLabel;
     @FXML
     private ComboBox<Course> coursesMenu = new ComboBox<>();
     @FXML
     private ComboBox<Teacher> teachersMenu = new ComboBox<Teacher>();
+
     @FXML
-    private Button assignBtn;
+    private TextField addSName;
+    @FXML
+    private TextField addSRollNo;
+    @FXML
+    private TextField addSUsername;
+    @FXML
+    private TextField addSEmail;
+    @FXML
+    private TextField addSPassword;
+
+    @FXML
+    private Label addSLabel;
+
+    @FXML
+    private TextField offerCourseName;
+
+    @FXML
+    private TextArea offerCourseDesc;
+
+    @FXML
+    private Label offerCourseLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,6 +107,7 @@ public class AdminDashboardController implements  Initializable {
     }
     public void dashboardPane(ActionEvent e){
         adminDashPane.setVisible(true);
+        adminAddStudentPane.setVisible(false);
         adminAddCoursePane.setVisible(false);
         adminAddTeacherPane.setVisible(false);
         assignCoursesPane.setVisible(false);
@@ -92,6 +116,7 @@ public class AdminDashboardController implements  Initializable {
 
     public void addCoursePane(ActionEvent e){
         adminDashPane.setVisible(false);
+        adminAddStudentPane.setVisible(false);
         adminAddCoursePane.setVisible(true);
         adminAddTeacherPane.setVisible(false);
         assignCoursesPane.setVisible(false);
@@ -99,13 +124,21 @@ public class AdminDashboardController implements  Initializable {
     }
 
     public void addTeacherPane(ActionEvent e){
+        adminAddStudentPane.setVisible(false);
         adminDashPane.setVisible(false);
         adminAddCoursePane.setVisible(false);
         adminAddTeacherPane.setVisible(true);
         assignCoursesPane.setVisible(false);
         approveCoursesPane.setVisible(false);
     }
-
+    public void addStudentPane(){
+        adminAddStudentPane.setVisible(true);
+        adminDashPane.setVisible(false);
+        adminAddCoursePane.setVisible(false);
+        adminAddTeacherPane.setVisible(false);
+        assignCoursesPane.setVisible(false);
+        approveCoursesPane.setVisible(false);
+    }
     public void addTeacherButton(ActionEvent e){
         String name, email,username,password;
         if(addTPName.getText().isBlank() == false && addTPEmail.getText().isBlank() == false && addTPUsername.getText().isBlank() == false && addTPPassword.getText().isBlank() == false){
@@ -122,12 +155,55 @@ public class AdminDashboardController implements  Initializable {
 
     }
 
+    public void addCourseButton(ActionEvent e){
+        String id, name,desc;
+        if(offerCourseName.getText().isBlank() == false && offerCourseDesc.getText().isBlank() == false ){
+            name = offerCourseName.getText();
+            desc = offerCourseDesc.getText();
+            String msg = ApplicationState.currentlyLoggedAdmin.addCourse(name,desc);
+            offerCourseLabel.setText(msg);
+        }
+        else{
+            offerCourseLabel.setText("Fill all fields");
+        }
+
+    }
+    public void addStudentButton(ActionEvent e){
+        String name, email,username,password,rollNo;
+        if(addSName.getText().isBlank() == false && addSRollNo.getText().isBlank() == false && addSEmail.getText().isBlank() == false && addSUsername.getText().isBlank() == false&& addSPassword.getText().isBlank() == false){
+            name = addSName.getText();
+            email = addSEmail.getText();
+            username = addSUsername.getText();
+            password = addSPassword.getText();
+            rollNo = addSRollNo.getText();
+            String msg = ApplicationState.currentlyLoggedAdmin.addStudent(name,email,username,password,rollNo);
+            addSLabel.setText(msg);
+        }
+        else{
+            addSLabel.setText("Fill all fields");
+        }
+
+    }
+
     public void cancelTeacherButton(ActionEvent e){
         addTPName.setText("");
         addTPEmail.setText("");
         addTPUsername.setText("");
         addTPPassword.setText("");
 
+    }
+
+    public void cancelStudentButton(ActionEvent e){
+        addSName.setText("");
+        addSEmail.setText("");
+        addSUsername.setText("");
+        addSPassword.setText("");
+        addSRollNo.setText("");
+    }
+
+    public void cancelCourseButton(ActionEvent e){
+        offerCourseName.setText("");
+        offerCourseDesc.setText("");
     }
     private void switchToLoginScene(){
         try{
@@ -149,6 +225,7 @@ public class AdminDashboardController implements  Initializable {
     public void Logout(ActionEvent e){
         switchToLoginScene();
     }
+
 
     public void assignCoursesPane(ActionEvent e) throws SQLException {
         String sql = "SELECT courseId, name, description FROM Course";

@@ -5,22 +5,65 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.*?>
 
-<?import javafx.scene.control.cell.CheckBoxListCell?>
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="180.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.AdminDashboardController">
    <children>
-      <AnchorPane fx:id="adminAddCoursePane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false" AnchorPane.leftAnchor="180.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
+      <AnchorPane fx:id="adminAddStudentPane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
          <children>
-            <Label layoutX="114.0" layoutY="32.0" text="Add Course">
+            <Label layoutX="98.0" layoutY="14.0" text="Add Student">
                <font>
                   <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="55.0" layoutY="95.0" text="Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="55.0" layoutY="185.0" text="Username">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="55.0" layoutY="140.0" text="Roll No">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="55.0" layoutY="275.0" text="Password">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="addSName" layoutX="130.0" layoutY="90.0" promptText="Student Name" />
+            <TextField fx:id="addSRollNo" layoutX="130.0" layoutY="135.0" promptText="Student Rollno" />
+            <TextField fx:id="addSUsername" layoutX="130.0" layoutY="180.0" promptText="Username" />
+            <PasswordField fx:id="addSPassword" layoutX="130.0" layoutY="275.0" promptText="Password" />
+            <TextField fx:id="addSEmail" layoutX="130.0" layoutY="225.0" promptText="Student Email" />
+            <Button fx:id="addSAddBtn" layoutX="130.0" layoutY="313.0" mnemonicParsing="false" onAction="#addStudentButton" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #263F73;" text="Add" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="addStudentCancelButton" layoutX="130.0" layoutY="349.0" mnemonicParsing="false" onAction="#cancelStudentButton" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #263F73;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="addSLabel" layoutX="130.0" layoutY="52.0" textFill="RED" />
+            <Label layoutX="55.0" layoutY="230.0" text="Email">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
@@ -140,7 +183,6 @@
 
                <ComboBox fx:id="approveCoursesMenu" layoutX="130.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Course" />
                <ComboBox fx:id="approveTeachersMenu" layoutX="130.0" layoutY="130.0" prefWidth="150.0" promptText="Choose Teacher" />
-               <CheckComboBox fx:id = "approveStudentsMenu" layoutX="130.0" layoutY="165.0" prefWidth="150.0"/>
                <Button fx:id="approveBtn" layoutX="130.0" layoutY="200.0" mnemonicParsing="false" onAction="#approveAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Approve Applications" textFill="#FFFFFF">
                   <font>
                      <Font name="Calibri" size="15.0" />
@@ -168,7 +210,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashCancel1" layoutX="18.0" layoutY="143.0" mnemonicParsing="false" onAction="#addTeacherPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Teacher" textFill="#263f73">
+            <Button fx:id="adminAddTeacherBtn" layoutX="18.0" layoutY="104.0" mnemonicParsing="false" onAction="#addTeacherPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Teacher" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -176,7 +218,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashCancel11" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" onAction="#addCoursePane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Course" textFill="#263f73">
+            <Button fx:id="adminAddCourseBtn" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" onAction="#addCoursePane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Offer Course" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -184,7 +226,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashCancel12" layoutX="18.0" layoutY="90.0" mnemonicParsing="false" onAction="#dashboardPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Dashboard" textFill="#263f73">
+            <Button fx:id="adminDashBtn" layoutX="18.0" layoutY="63.0" mnemonicParsing="false" onAction="#dashboardPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Dashboard" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -192,7 +234,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashCancel2" layoutX="18.0" layoutY="253.0" mnemonicParsing="false" onAction="#assignCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Assign Courses" textFill="#263f73">
+            <Button fx:id="adminAssignCourseBtn" layoutX="18.0" layoutY="253.0" mnemonicParsing="false" onAction="#assignCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Assign Courses" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -200,7 +242,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashCancel21" layoutX="18.0" layoutY="307.0" mnemonicParsing="false" onAction="#approveCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Approve Applications" textFill="#263f73">
+            <Button fx:id="adminApproveBtn" layoutX="18.0" layoutY="307.0" mnemonicParsing="false" onAction="#approveCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Approve Applications" textFill="#263f73">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="adminAddStudentBtn" layoutX="18.0" layoutY="149.0" mnemonicParsing="false" onAction="#addStudentPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Student" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -209,6 +259,44 @@
                </cursor>
             </Button>
 
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="adminAddCoursePane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <Label layoutX="98.0" layoutY="14.0" text="Offer Course">
+               <font>
+                  <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="55.0" layoutY="156.0" text="Description">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="55.0" layoutY="100.0" text="Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="offerCourseName" layoutX="130.0" layoutY="97.0" promptText="Course Name" />
+            <Button fx:id="offerCourseAddBtn" layoutX="130.0" layoutY="275.0" mnemonicParsing="false" onAction="#addCourseButton" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #263F73;" text="Add" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="offerCancelButton" layoutX="130.0" layoutY="321.0" mnemonicParsing="false" onAction="#cancelCourseButton" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #263F73;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="offerCourseLabel" layoutX="130.0" layoutY="52.0" textFill="RED" />
+            <TextArea fx:id="offerCourseDesc" layoutX="130.0" layoutY="156.0" prefHeight="97.0" prefWidth="150.0" promptText="Course Description" />
          </children>
       </AnchorPane>
    </children>

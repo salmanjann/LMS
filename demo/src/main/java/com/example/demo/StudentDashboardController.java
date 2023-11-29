@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class StudentDashboardController implements Initializable {
     @FXML
-    private Button studentDashCancel;
+    private Button studentDashLogout;
     @FXML
     private Label studentName;
     @FXML
@@ -52,7 +52,7 @@ public class StudentDashboardController implements Initializable {
             studentStage.initStyle(StageStyle.UNDECORATED);
             studentStage.setScene(new Scene(root, 520, 400));
             studentStage.show();
-            Stage stage = (Stage) studentDashCancel.getScene().getWindow();
+            Stage stage = (Stage) studentDashLogout.getScene().getWindow();
             stage.close();
         }
         catch (Exception e){
@@ -70,6 +70,8 @@ public class StudentDashboardController implements Initializable {
     }
 
     public void applyCourses(ActionEvent e) throws SQLException {
+        studentDashPane.setVisible(false);
+        applyCoursesPane.setVisible(true);
         coursesMenu.setOnAction(null);
 
         var sql = "SELECT courseId, name, description FROM Course";

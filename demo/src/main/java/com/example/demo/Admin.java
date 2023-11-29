@@ -42,6 +42,51 @@ public class Admin extends User {
         return "New Teacher Added";
     }
 
+    public String addStudent(String _name, String _email, String _username, String _password,String _rollNo) {
+        String isStudentExist = "SELECT COUNT(1) FROM `STUDENT` WHERE username = '" + _username + "' OR email = '" + _email + "'";
+        String insertStudent = "insert into `STUDENT`(`name`, username,email,`password`,rollNo) value ('" + _name + "','" + _username + "','" + _email + "','"+ _password + "','" + _rollNo + "');";
+
+        try {
+            Statement statement = ApplicationState.connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(isStudentExist);
+
+
+            if (queryResult.next()) {
+                if (queryResult.getInt(1) == 1) {
+                    return "Student Exists";
+                } else {
+                    Statement statement2 = ApplicationState.connectDB.createStatement();
+                    statement2.executeUpdate(insertStudent);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "New Student Added";
+    }
+
+    public String addCourse(String _name, String _desc) {
+        String isCourseExist = "SELECT COUNT(1) FROM Course WHERE name = '" + _name + "'";
+        String insertCourse = "insert into Course(name, description) value ('" + _name + "','" + _desc + "');";
+
+        try {
+            Statement statement = ApplicationState.connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(isCourseExist);
+
+
+            if (queryResult.next()) {
+                if (queryResult.getInt(1) == 1) {
+                    return "Course Exists";
+                } else {
+                    Statement statement2 = ApplicationState.connectDB.createStatement();
+                    statement2.executeUpdate(insertCourse);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "New Course Added";
+    }
     public String assignCourseToTeacher(int courseId, int teacherId) {
         String insertTeacherCourse = "insert into TeacherCourse (courseId, userId) value (" + courseId + ", " + teacherId + ");";
         try {
