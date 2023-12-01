@@ -1,0 +1,100 @@
+create database LMS;
+use LMS;
+
+CREATE TABLE ADMIN(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50),
+    username varchar(50) unique,
+    email varchar(50),
+    password varchar(50)
+);
+
+
+CREATE TABLE TEACHER(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50),
+    username varchar(50) unique,
+    email varchar(50),
+    password varchar(50)
+);
+
+CREATE TABLE STUDENT(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    `name` varchar(50),
+    username varchar(50) unique,
+    email varchar(50),
+    `password` varchar(50),
+    rollNo varchar(8)
+);
+
+CREATE TABLE Course (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    courseId varchar(255) NOT NULL,
+    courseName VARCHAR(255) NOT NULL,
+    courseDescription TEXT
+);
+-- Drop the existing courseSection table if it exists
+DROP TABLE IF EXISTS courseSection;
+-- Create the courseSection table with sectionName column
+CREATE TABLE courseSection (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sectionName varchar(1) NOT NULL,
+    courseName VARCHAR(255) NOT NULL,
+    teacherName VARCHAR(255)
+);
+-- Create a trigger to automatically set sectionName
+DELIMITER //
+CREATE TRIGGER before_insert_courseSection
+BEFORE INSERT ON courseSection
+FOR EACH ROW
+BEGIN
+    DECLARE next_value CHAR(1);
+    
+    -- Calculate the next alphabet based on the existing values in the table
+    SELECT IFNULL(CHAR(64 + COUNT(DISTINCT sectionName) + 1), 'A') INTO next_value
+    FROM courseSection
+    WHERE courseName = NEW.courseName;
+
+    -- Set the sectionName based on the next_value (as alphabet)
+    SET NEW.sectionName = next_value;
+END;
+//
+DELIMITER ;
+
+CREATE table studentSections(
+id INT AUTO_INCREMENT PRIMARY KEY,
+studentName varchar(255) not null,
+courseSec varchar(255) not null,
+courseName varchar(255) not null
+);
+create table requestingCourse(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	studentName varchar(255) not null,
+	courseName varchar(255) not null
+);
+insert into ADMIN(name, username,email,password) value 
+('admin','admin','admin@LMS.com','admin');
+
+insert into TEACHER(name, username,email,password) value 
+('teacher','teacher','teacher@LMS.com','teacher');
+
+insert into STUDENT(name, username,email,password,rollNo) value 
+('student','student','student@LMS.com','student','21I-2574');
+
+-- Insert more records for TEACHER
+INSERT INTO TEACHER (name, username, email, password) VALUES 
+('teacher2', 'teacher2', 'teacher2@LMS.com', 'teacher2'),
+('teacher3', 'teacher3', 'teacher3@LMS.com', 'teacher3'),
+('teacher4', 'teacher4', 'teacher4@LMS.com', 'teacher4');
+;
+
+-- Insert more records for STUDENT
+INSERT INTO STUDENT (name, username, email, password, rollNo) VALUES 
+('student2', 'student2', 'student2@LMS.com', 'student2', '21I-1234'),
+('student3', 'student3', 'student3@LMS.com', 'student3', '21I-5678'),
+('student4', 'student4', 'student4@LMS.com', 'student4', '21I-5178');
+
+
+select * from Course;
+select * from courseSection;
+select * from studentSections;

@@ -14,29 +14,23 @@ public class Student extends  User{
         rollNo = _rollNo;
     }
 
+    public String getRollNo() {
+        return rollNo;
+    }
+
     @Override
     public String toString() {
         return getName();
     }
 
-    public String studentApplyCourse(int courseId, int teacherId){
-        String findTeacherCourse = "select * from teachercourse where courseid = " + courseId + " and userid = " + teacherId + ";";
-        try {
+    public void requestCourse(String courseName){
+        String query = "insert into requestingCourse(studentName,courseName) value('"+ApplicationState.currentlyLoggedStudent.getRollNo()+"','"+courseName+"');";
+        try{
             Statement statement = ApplicationState.connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(findTeacherCourse);
-            try {
-                queryResult.next();
-                String insertTeacherCourse = "insert into StudentTeacherCourse (userId, teachercourseid, approved) value (" + ApplicationState.currentlyLoggedStudent.getId() + ", " +  queryResult.getString("id")+ "," + " 0);";
-                statement.executeUpdate(insertTeacherCourse);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                return "Already Applied";
-            }
+            statement.executeUpdate(query);
         }
-        catch (Exception e) {
+        catch (Exception e){
             e.printStackTrace();
         }
-        return "Applied for Course";
     }
 }

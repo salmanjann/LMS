@@ -8,9 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,26 +21,69 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class StudentDashboardController implements Initializable {
-    @FXML
-    private Button studentDashLogout;
-    @FXML
-    private Label studentName;
-    @FXML
-    private AnchorPane applyCoursesPane;
-
-    @FXML
-    private Label applyCourseLabel;
-    @FXML
-    private ComboBox<Course> coursesMenu = new ComboBox<>();
-    @FXML
-    private ComboBox<Teacher> teachersMenu = new ComboBox<>();
-    @FXML
-    private Button applyBtn;
+    // ANCHORS
     @FXML
     private AnchorPane studentDashPane;
+    @FXML
+    private AnchorPane enStudentsPane;
+    @FXML
+    private Button studentDashLogout;
+
+    // DASHBORD
+    @FXML
+    private Label studentName;
+
+    // ENROLL COURSES
+    @FXML
+    private TableView<enStudentTable> enCourseTable;
+    @FXML
+    private TableColumn<enStudentTable,String> enTableCourseName;
+    @FXML
+    private TableColumn<enStudentTable,Button> enTableCourseRequest;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         studentName.setText("Welcome "+ ApplicationState.currentlyLoggedStudent.getName() + " !");
+    }
+    public void EnrollCourse(){
+        studentDashPane.setVisible(false);
+        enStudentsPane.setVisible(true);
+        ObservableList<enStudentTable> enList = FXCollections.observableArrayList();
+        String getCourses = "SELECT c.courseName FROM Course c LEFT JOIN studentSections s ON c.courseName = s.courseName AND s.studentName = '"+ApplicationState.currentlyLoggedStudent.getRollNo()+"' LEFT JOIN requestingCourse r ON c.courseName = r.courseName AND r.studentName = '"+ApplicationState.currentlyLoggedStudent.getRollNo()+"' WHERE s.studentName IS NULL AND r.studentName IS NULL;";
+
+        try {
+            Statement statement = ApplicationState.connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(getCourses);
+
+            while (queryResult.next()) {
+                String courseName = queryResult.getString("courseName");
+                Button requestButton = createRequestButton(courseName);
+
+                // Create CourseData object and add it to the list
+                enStudentTable courseData = new enStudentTable(courseName,requestButton);
+                enList.add(courseData);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        enTableCourseName.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+        enTableCourseRequest.setCellValueFactory(new PropertyValueFactory<>("requestButton"));
+
+        enCourseTable.setItems(enList);
+    }
+    // Create a Button for the Request column
+    private Button createRequestButton(String courseName) {
+        Button requestButton = new Button("Request");
+        requestButton.setOnAction(event -> handleRequestButtonClick(courseName,requestButton));
+        return requestButton;
+    }
+    // Your button click event handler
+    private void handleRequestButtonClick(String courseName,Button _reqButton) {
+        ApplicationState.currentlyLoggedStudent.requestCourse(courseName);
+        _reqButton.setText("Requested");
+    }
+    public void dashboardPane(ActionEvent e){
+        studentDashPane.setVisible(true);
+        enStudentsPane.setVisible(false);
     }
     private void switchToLoginScene(){
         try{
@@ -62,77 +104,5 @@ public class StudentDashboardController implements Initializable {
     }
     public void Logout(ActionEvent e){
         switchToLoginScene();
-    }
-
-    public void dashboardPane(ActionEvent e){
-        studentDashPane.setVisible(true);
-        applyCoursesPane.setVisible(false);
-    }
-
-    public void applyCourses(ActionEvent e) throws SQLException {
-        studentDashPane.setVisible(false);
-        applyCoursesPane.setVisible(true);
-        coursesMenu.setOnAction(null);
-
-        var sql = "SELECT courseId, name, description FROM Course";
-        Statement statement = ApplicationState.connectDB.createStatement();
-        ResultSet queryResult = statement.executeQuery(sql);
-
-        ObservableList<Course> courses = FXCollections.observableArrayList();
-
-        while (queryResult.next()) {
-            Course course = new Course(
-                    queryResult.getInt("courseId"),
-                    queryResult.getString("name"),
-                    queryResult.getString("description")
-            );
-            courses.add(course);
-        }
-
-
-        coursesMenu.setItems(courses);
-
-        coursesMenu.setOnAction(f -> {
-            try {
-                handleCourseSelection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        applyCoursesPane.setVisible(true);
-    }
-
-    private void handleCourseSelection() throws SQLException{
-        Course selectedCourse = coursesMenu.getValue();
-
-        int courseId = selectedCourse.getCourseId();
-        var sql = "SELECT Teacher.id, Teacher.name, Teacher.username, Teacher.email, Teacher.password " +
-                "FROM Teacher WHERE Teacher.id in (select userid from TeacherCourse where courseId = " + courseId + ")";
-
-        Statement statement = ApplicationState.connectDB.createStatement();
-        ResultSet queryResult = statement.executeQuery(sql);
-
-        ObservableList<Teacher> teachers = FXCollections.observableArrayList();
-
-        while (queryResult.next()) {
-            Teacher teacher = new Teacher(
-                    queryResult.getInt("id"),
-                    queryResult.getString("name"),
-                    queryResult.getString("username"),
-                    queryResult.getString("email"),
-                    queryResult.getString("password")
-            );
-            teachers.add(teacher);
-        }
-
-        teachersMenu.setItems(teachers);
-    }
-
-    public void applyAction(ActionEvent e) throws SQLException {
-        String msg = ApplicationState.currentlyLoggedStudent.studentApplyCourse(coursesMenu.getValue().getCourseId(), teachersMenu.getValue().getId());
-        applyCourseLabel.setText(msg);
-        teachersMenu.getSelectionModel().clearSelection();
-        applyCourses(null);
     }
 }

@@ -35,7 +35,6 @@ public class LoginController implements Initializable {
         ApplicationState.connectNow = new DatabaseConnection();
         ApplicationState.connectDB = ApplicationState.connectNow.getConnection();
     }
-
    private void switchToAdminScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("AdminDashboard.fxml"));
         Parent root = fxmlLoader.load();
@@ -47,7 +46,6 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) loginCancelButton.getScene().getWindow();
         stage.close();
    }
-
    private void switchToTeacherScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("TeacherDashboard.fxml"));
         Parent root = fxmlLoader.load();
@@ -59,7 +57,6 @@ public class LoginController implements Initializable {
        Stage stage = (Stage) loginCancelButton.getScene().getWindow();
        stage.close();
    }
-
    private void switchToStudentScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("StudentDashboard.fxml"));
         Parent root = fxmlLoader.load();
@@ -71,7 +68,6 @@ public class LoginController implements Initializable {
        Stage stage = (Stage) loginCancelButton.getScene().getWindow();
        stage.close();
    }
-
    public  void loginAction(ActionEvent e){
        if(loginUsernameField.getText().isBlank() == false && loginPasswordField.getText().isBlank() == false){
             validateLogin();
@@ -90,7 +86,6 @@ public class LoginController implements Initializable {
        Stage stage = (Stage) loginCancelButton.getScene().getWindow();
        stage.close();
    }
-
     private void validateLogin() {
         // Check if the connection is successful
         if (ApplicationState.connectDB != null) {
@@ -159,7 +154,6 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
-
     private  void createTeacher(){
         String getAdmin = "SELECT * FROM `TEACHER` WHERE username = '" + loginUsernameField.getText() + "'";
         try {

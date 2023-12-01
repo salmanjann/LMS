@@ -2,8 +2,9 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -19,30 +20,6 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="applyCoursesPane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false" AnchorPane.leftAnchor="180.0">
-         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="0.0" style="-fx-background-color: #263F73;">
-            <children>
-               <Label layoutX="98.0" layoutY="14.0" text="Apply Courses">
-                  <font>
-                     <Font name="Calibri" size="24.0" />
-                  </font>
-               </Label>
-               <Label layoutX="55.0" layoutY="95.0" text="Course">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <ComboBox fx:id="coursesMenu" layoutX="130.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Course" />
-               <ComboBox fx:id="teachersMenu" layoutX="130.0" layoutY="130.0" prefWidth="150.0" promptText="Choose Teacher" />
-               <Button fx:id="applyBtn" layoutX="130.0" layoutY="165.0" mnemonicParsing="false" onAction="#applyAction" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Apply" textFill="#FFFFFF">
-                  <font>
-                     <Font name="Calibri" size="15.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </Button>
-            </children>
-         </AnchorPane>
          <Label fx:id="applyCourseLabel" layoutX="132.0" layoutY="64.0" prefHeight="17.0" prefWidth="144.0" textFill="RED" />
       </AnchorPane>
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="180.0" style="-fx-background-color: #263F73;">
@@ -52,15 +29,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="studentAppCoursesBtn" layoutX="18.0" layoutY="143.0" mnemonicParsing="false" onAction="#applyCourses" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Apply for Courses" textFill="#263f73">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="studentDashLogout" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
+            <Button fx:id="studentDashLogout" layoutX="18.0" layoutY="242.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -76,6 +45,29 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="enrollStudentsBtn" layoutX="18.0" layoutY="139.0" mnemonicParsing="false" onAction="#EnrollCourse" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Enroll Courses" textFill="#263f73">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="enStudentsPane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <Label fx:id="studentName1" layoutX="74.0" layoutY="14.0" text="Enroll Courses">
+               <font>
+                  <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="enCourseTable" layoutY="60.0" prefHeight="340.0" prefWidth="340.0">
+              <columns>
+                <TableColumn fx:id="enTableCourseName" prefWidth="176.66668701171875" text="Course Name" />
+                 <TableColumn fx:id="enTableCourseRequest" prefWidth="161.33331298828125" text="Request" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>
