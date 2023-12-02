@@ -72,6 +72,20 @@ create table requestingCourse(
 	studentName varchar(255) not null,
 	courseName varchar(255) not null
 );
+create table FeedbackStatus(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	studentName varchar(255) not null,
+	courseName varchar(255) not null,
+    status varchar(255)
+);
+create table FeedbackFormSubmissions(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    studentName varchar(255) not null,
+	courseName varchar(255) not null,
+    Q1 varchar(255) not null,
+    Q2 varchar(255) not null,
+    comments varchar(255) not null
+);
 insert into ADMIN(name, username,email,password) value 
 ('admin','admin','admin@LMS.com','admin');
 
@@ -98,3 +112,5 @@ INSERT INTO STUDENT (name, username, email, password, rollNo) VALUES
 select * from Course;
 select * from courseSection;
 select * from studentSections;
+select * from FeedbackStatus;
+select * from FeedbackFormSubmissions;
