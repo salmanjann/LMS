@@ -274,7 +274,6 @@ public class AdminDashboardController implements  Initializable {
         approveCourseStudent.setCellValueFactory(new PropertyValueFactory<>("studentName"));
         approveCourseCN.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         approveCourseApprove.setCellValueFactory(new PropertyValueFactory<>("button"));
-
         approveCourseTable.setItems(apCList);
     }
     private Button createApproveButton(String studentName,String courseName) {

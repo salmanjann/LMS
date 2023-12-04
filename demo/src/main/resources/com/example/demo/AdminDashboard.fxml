@@ -179,7 +179,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="adminDashCancel" layoutX="18.0" layoutY="334.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
+            <Button fx:id="adminDashCancel" layoutX="18.0" layoutY="335.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -187,7 +187,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminAddTeacherBtn" layoutX="18.0" layoutY="104.0" mnemonicParsing="false" onAction="#addTeacherPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Teacher" textFill="#263f73">
+            <Button fx:id="adminAddTeacherBtn" layoutX="18.0" layoutY="110.0" mnemonicParsing="false" onAction="#addTeacherPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Teacher" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -195,7 +195,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminAddCourseBtn" layoutX="18.0" layoutY="193.0" mnemonicParsing="false" onAction="#addCoursePane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Offer Course" textFill="#263f73">
+            <Button fx:id="adminAddCourseBtn" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" onAction="#addCoursePane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Offer Course" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -203,7 +203,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminDashBtn" layoutX="18.0" layoutY="63.0" mnemonicParsing="false" onAction="#dashboardPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Dashboard" textFill="#263f73">
+            <Button fx:id="adminDashBtn" layoutX="18.0" layoutY="65.0" mnemonicParsing="false" onAction="#dashboardPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Dashboard" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -211,7 +211,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminAssignCourseBtn" layoutX="18.0" layoutY="242.0" mnemonicParsing="false" onAction="#assignCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Assign Courses" textFill="#263f73">
+            <Button fx:id="adminAssignCourseBtn" layoutX="18.0" layoutY="245.0" mnemonicParsing="false" onAction="#assignCoursesPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Assign Courses" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -219,7 +219,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminApproveBtn" layoutX="18.0" layoutY="289.0" mnemonicParsing="false" onAction="#approveCourse" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Approve Course" textFill="#263f73">
+            <Button fx:id="adminApproveBtn" layoutX="18.0" layoutY="290.0" mnemonicParsing="false" onAction="#approveCourse" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Approve Course" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -227,7 +227,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="adminAddStudentBtn" layoutX="18.0" layoutY="149.0" mnemonicParsing="false" onAction="#addStudentPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Student" textFill="#263f73">
+            <Button fx:id="adminAddStudentBtn" layoutX="18.0" layoutY="155.0" mnemonicParsing="false" onAction="#addStudentPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Add Student" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>

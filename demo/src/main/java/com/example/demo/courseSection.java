@@ -4,6 +4,7 @@ public class courseSection {
     private String sectionName;
     private String  courseName;
     private String teacherName;
+    private int id;
 
     public courseSection(String _sectionName,String _courseName,String _teacherName){
         sectionName = _sectionName;
@@ -24,6 +25,6 @@ public class courseSection {
     }
     @Override
     public String toString() {
-        return sectionName;
+        return "'" + sectionName + "', '" + courseName + "'";
     }
 }

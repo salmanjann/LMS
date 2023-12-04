@@ -267,4 +267,6 @@ public class Admin extends User {
 
         return "Application Approved";
     }
+
+
 }

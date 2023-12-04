@@ -2,7 +2,11 @@ package com.example.demo;
 
 import javafx.scene.control.Button;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 
@@ -86,5 +90,41 @@ public class Student extends  User{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public ObservableList<Course> getCourses(String sql) throws SQLException {
+        Statement statement = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = statement.executeQuery(sql);
+
+        ObservableList<Course> courses = FXCollections.observableArrayList();
+
+        while (queryResult.next()) {
+            Course course = new Course(
+                    queryResult.getString("courseId"),
+                    queryResult.getString("name"),
+                    queryResult.getString("description")
+            );
+            courses.add(course);
+        }
+        return courses;
+    }
+
+    public ObservableList<Teacher> getTeachers(String sql) throws SQLException {
+        Statement statement = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = statement.executeQuery(sql);
+
+        ObservableList<Teacher> teachers = FXCollections.observableArrayList();
+
+        while (queryResult.next()) {
+            Teacher teacher = new Teacher(
+                    queryResult.getInt("id"),
+                    queryResult.getString("name"),
+                    queryResult.getString("username"),
+                    queryResult.getString("email"),
+                    queryResult.getString("password")
+            );
+            teachers.add(teacher);
+        }
+        return teachers;
     }
 }
