@@ -26,7 +26,8 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     public ComboBox<courseSection> attendanceMenu;
-
+    @FXML
+    public ComboBox<courseSection> viewFeedbackSections;
     @FXML
     public DatePicker attendanceDate;
     @FXML
@@ -48,8 +49,25 @@ public class TeacherDashboardController implements Initializable {
     private Button teacherDashCancel;
     @FXML
     private Label teacherName;
+    @FXML
+    private Label teacherEmail;
+    @FXML
+    private  AnchorPane viewFeedback;
+    @FXML
+    private TableView<viewFeedbackTable> viewFeedbackTable;
+    @FXML
+    private TableColumn<viewFeedbackTable,String> StudentCol;
+    @FXML
+    private TableColumn<viewFeedbackTable,String> Q1Col;
+    @FXML
+    private TableColumn<viewFeedbackTable,String> Q2Col;
+    @FXML
+    private TableColumn<viewFeedbackTable,String> Q3Col;
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        teacherName.setText("Welcome "+ ApplicationState.currentlyLoggedTeacher.getName() + " !");
+        teacherName.setText(ApplicationState.currentlyLoggedTeacher.getName());
+        teacherEmail.setText(ApplicationState.currentlyLoggedTeacher.getEmail());
         attendanceDate.setValue(LocalDate.now());
     }
     private void switchToLoginScene(){
@@ -76,16 +94,25 @@ public class TeacherDashboardController implements Initializable {
     public void dashboardPane(ActionEvent e){
         teacherDashPane.setVisible(true);
         attendancePane.setVisible(false);
+        viewFeedback.setVisible(false);
+
     }
 
     public void attendancePane(ActionEvent e) throws SQLException {
         teacherDashPane.setVisible(false);
         attendancePane.setVisible(true);
+        viewFeedback.setVisible(false);
 
         String sql = "Select courseName, sectionName, teacherName from coursesection cs where cs.teachername = '" + ApplicationState.currentlyLoggedTeacher.getName() + "'";
         attendanceMenu.setItems(ApplicationState.currentlyLoggedTeacher.getCourseSections(sql));
     }
-
+    public void viewFeedbackPane(ActionEvent e) throws SQLException {
+        teacherDashPane.setVisible(false);
+        attendancePane.setVisible(false);
+        viewFeedback.setVisible(true);
+        String sql = "Select courseName, sectionName, teacherName from coursesection cs where cs.teachername = '" + ApplicationState.currentlyLoggedTeacher.getName() + "'";
+        viewFeedbackSections.setItems(ApplicationState.currentlyLoggedTeacher.getCourseSections(sql));
+    }
     /*public void markAttendance(ActionEvent e) {
         ObservableList<approveCourses> mAList = FXCollections.observableArrayList();
         String getCourses = "SELECT studentName,courseName FROM requestingCourse;";
@@ -151,6 +178,8 @@ public class TeacherDashboardController implements Initializable {
 
     private Button createPresentButton(int studentSectionId, LocalDate attendanceDate, boolean isPresent) {
         Button atndncButton = new Button("Present");
+        if(!isPresent)
+            atndncButton.setText("Absent");
         atndncButton.setOnAction(event -> {
             try {
                 handlePresentButtonClick(studentSectionId,attendanceDate, isPresent,atndncButton);
@@ -165,5 +194,29 @@ public class TeacherDashboardController implements Initializable {
         ApplicationState.currentlyLoggedTeacher.MarkAttendance(studentSectionId,attendanceDate, isPresent);
         atndncButton.setText("Marked");
     }
+    public void ShowFeedback(ActionEvent event) throws SQLException {
+        ObservableList<viewFeedbackTable> feedbackList = FXCollections.observableArrayList();
+        Statement statement = ApplicationState.connectDB.createStatement();
+        courseSection courseSectionSelected = viewFeedbackSections.getValue();
+        String sql = "SELECT fs.studentName, fs.Q1, fs.Q2, fs.comments FROM FeedbackFormSubmissions fs JOIN studentSections ss ON fs.studentName = ss.studentName AND fs.courseName = ss.courseName WHERE ss.courseSec = '"+courseSectionSelected.getSectionName()+"' AND ss.courseName = '"+courseSectionSelected.getCourseName()+"';";
+        ResultSet queryResult = statement.executeQuery(sql);
 
+        while (queryResult.next()) {
+            String rollNo = queryResult.getString(1);
+            String Q1 = queryResult.getString(2);
+            String Q2 = queryResult.getString(3);
+            String Q3 = queryResult.getString(4);
+
+            // Create CourseData object and add it to the list
+            viewFeedbackTable feedback= new viewFeedbackTable(rollNo,Q1,Q2,Q3);
+            feedbackList.add(feedback);
+        }
+
+        StudentCol.setCellValueFactory(new PropertyValueFactory<>("rollNo"));
+        Q1Col.setCellValueFactory(new PropertyValueFactory<>("Q1"));
+        Q2Col.setCellValueFactory(new PropertyValueFactory<>("Q2"));
+        Q3Col.setCellValueFactory(new PropertyValueFactory<>("Q3"));
+
+        viewFeedbackTable.setItems(feedbackList);
+    }
 }

@@ -15,9 +15,39 @@
    <children>
       <AnchorPane fx:id="studentDashPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="180.0">
          <children>
-            <Label fx:id="studentName" layoutX="74.0" layoutY="14.0" text="Student Dashboard">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="Student Dashboard" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="110.0" text="Name :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="studentName" layoutX="90.0" layoutY="110.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="150.0" text="Roll No :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="studentEmail" layoutX="90.0" layoutY="190.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="190.0" text="Email :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="studentRollNo" layoutX="90.0" layoutY="150.0">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
@@ -68,7 +98,7 @@
       </AnchorPane>
       <AnchorPane fx:id="enStudentsPane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
          <children>
-            <Label fx:id="studentName1" layoutX="74.0" layoutY="14.0" text="Enroll Courses">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="Enroll Courses" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
@@ -83,7 +113,7 @@
       </AnchorPane>
       <AnchorPane fx:id="submitFeedbackPane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
          <children>
-            <Label fx:id="studentName2" layoutX="74.0" layoutY="14.0" text="Submit Feedback">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="Submit Feedback" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>

@@ -36,6 +36,10 @@ public class StudentDashboardController implements Initializable {
     // DASHBORD
     @FXML
     private Label studentName;
+    @FXML
+    private Label studentEmail;
+    @FXML
+    private Label studentRollNo;
 
     // ENROLL COURSES
     @FXML
@@ -71,12 +75,14 @@ public class StudentDashboardController implements Initializable {
     // Q3 TEXT AREA
     @FXML
     private TextArea   Q3Text;
-    private String  FeedbackCourse = "";
+    private String  FeedbackCourse ;
     @FXML
     private  Label FeedbackAlertLabel;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        studentName.setText("Welcome "+ ApplicationState.currentlyLoggedStudent.getName() + " !");
+        studentName.setText(ApplicationState.currentlyLoggedStudent.getName());
+        studentEmail.setText(ApplicationState.currentlyLoggedStudent.getEmail());
+        studentRollNo.setText(ApplicationState.currentlyLoggedStudent.getRollNo());
     }
     public void EnrollCourse(){
         studentDashPane.setVisible(false);

@@ -47,6 +47,8 @@ public class AdminDashboardController implements  Initializable {
     private Button adminDashCancel; // LOG OUT BUTTON
     @FXML
     private Label adminName;
+    @FXML
+    private Label adminEmail;
 
     // ADD TEACHER
     @FXML
@@ -108,7 +110,8 @@ public class AdminDashboardController implements  Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        adminName.setText("Welcome "+ ApplicationState.currentlyLoggedAdmin.getName() + " !");
+        adminName.setText(ApplicationState.currentlyLoggedAdmin.getName());
+        adminEmail.setText(ApplicationState.currentlyLoggedAdmin.getEmail());
     }
     public void dashboardPane(ActionEvent e){
         adminDashPane.setVisible(true);

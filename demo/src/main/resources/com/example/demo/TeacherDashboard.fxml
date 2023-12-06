@@ -1,37 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <AnchorPane prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TeacherDashboardController">
    <children>
       <AnchorPane fx:id="teacherDashPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="180.0">
          <children>
-            <Label fx:id="teacherName" layoutX="74.0" layoutY="14.0" text="Teacher Dashboard">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="Teacher Dashboard" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="110.0" text="Name :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="150.0" text="Email :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="teacherEmail" layoutX="90.0" layoutY="150.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="teacherName" layoutX="90.0" layoutY="110.0">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="attendancePane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
          <children>
-            <Label fx:id="studentName1" layoutX="74.0" layoutY="14.0" text="Update Attendance">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="Update Attendance" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <ComboBox fx:id="attendanceMenu" layoutX="120.0" layoutY="60.0" prefWidth="200.0" promptText="Choose Course and Section" />
-            <DatePicker fx:id="attendanceDate" layoutX="120.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Date" />
-            <Button fx:id="PopualateStudents" layoutX="120" layoutY="130" text="Populate Students" onAction="#ShowStudents"/>
-            <TableView fx:id="attendanceTable" layoutY="165.0" prefHeight="323.0" prefWidth="340.0">
+            <ComboBox fx:id="attendanceMenu" layoutX="77.0" layoutY="58.0" prefWidth="200.0" promptText="Choose Course and Section" />
+            <DatePicker fx:id="attendanceDate" layoutX="102.0" layoutY="92.0" prefWidth="150.0" promptText="Choose Date" />
+            <Button fx:id="PopualateStudents" layoutX="102.0" layoutY="128.0" onAction="#ShowStudents" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Populate Students" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <TableView fx:id="attendanceTable" layoutY="165.0" prefHeight="235.0" prefWidth="340.0">
                <columns>
 
                   <TableColumn fx:id="RollNo" prefWidth="115.99996948242188" text="Roll No" />
@@ -48,7 +74,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="teacherDashLogout" layoutX="18.0" layoutY="242.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
+            <Button fx:id="teacherDashCancel" layoutX="18.0" layoutY="242.0" mnemonicParsing="false" onAction="#Logout" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="Log Out" textFill="#263f73">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -72,6 +98,40 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="viewFeedbackBtn" layoutX="18.0" layoutY="186.0" mnemonicParsing="false" onAction="#viewFeedbackPane" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #FFFFFF;" text="View Feedback" textFill="#263f73">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="viewFeedback" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
+         <children>
+            <ComboBox fx:id="viewFeedbackSections" layoutX="77.0" layoutY="50.0" prefWidth="200.0" promptText="Choose Course and Section" />
+            <TableView fx:id="viewFeedbackTable" layoutY="131.0" prefHeight="269.0" prefWidth="340.0">
+               <columns>
+                  <TableColumn fx:id="StudentCol" prefWidth="74.66668701171875" text="Roll No" />
+                  <TableColumn fx:id="Q1Col" prefWidth="63.3333740234375" text="Q1" />
+                  <TableColumn fx:id="Q2Col" prefWidth="67.99993896484375" text="Q2" />
+                  <TableColumn fx:id="Q3Col" prefWidth="132.66668701171875" text="Q3" />
+               </columns>
+            </TableView>
+            <Button fx:id="showFeedbackBtn" layoutX="102.0" layoutY="84.0" mnemonicParsing="false" onAction="#ShowFeedback" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #263F73;" text="Show Feedback" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="View Feedback" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
 
