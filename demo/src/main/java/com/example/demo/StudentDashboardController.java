@@ -1,7 +1,11 @@
 package com.example.demo;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,14 +17,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class StudentDashboardController implements Initializable {
+    @FXML
+    public AnchorPane showAttendance;
+    @FXML
+    public TableView attendanceTable;
+    @FXML
+    public TableColumn attendanceDate;
+    @FXML
+    public TableColumn attendanceStatus;
     // ANCHORS
     @FXML
     private AnchorPane studentDashPane;
@@ -32,7 +45,8 @@ public class StudentDashboardController implements Initializable {
     private  AnchorPane submitFeedbackPane;
     @FXML
     private AnchorPane FeedbackForm;
-
+    @FXML
+    private ComboBox<StudentSection> attSectionCourseMenu;
     // DASHBORD
     @FXML
     private Label studentName;
@@ -88,6 +102,7 @@ public class StudentDashboardController implements Initializable {
         studentDashPane.setVisible(false);
         enStudentsPane.setVisible(true);
         submitFeedbackPane.setVisible(false);
+        showAttendance.setVisible(false);
 
         ObservableList<enStudentTable> enList = FXCollections.observableArrayList();
         String getCourses = "SELECT c.courseName FROM Course c LEFT JOIN studentSections s ON c.courseName = s.courseName AND s.studentName = '"+ApplicationState.currentlyLoggedStudent.getRollNo()+"' LEFT JOIN requestingCourse r ON c.courseName = r.courseName AND r.studentName = '"+ApplicationState.currentlyLoggedStudent.getRollNo()+"' WHERE s.studentName IS NULL AND r.studentName IS NULL;";
@@ -127,6 +142,7 @@ public class StudentDashboardController implements Initializable {
         submitFeedbackPane.setVisible(true);
         studentDashPane.setVisible(false);
         enStudentsPane.setVisible(false);
+        showAttendance.setVisible(false);
 
         ApplicationState.currentlyLoggedStudent.checkFeedbackTable();
         ObservableList<FeedbackTable> feedbackList = FXCollections.observableArrayList();
@@ -244,5 +260,43 @@ public class StudentDashboardController implements Initializable {
     }
     public void Logout(ActionEvent e){
         switchToLoginScene();
+    }
+
+
+    public void showAttendance(ActionEvent event) throws SQLException {
+        studentDashPane.setVisible(false);
+        enStudentsPane.setVisible(false);
+        submitFeedbackPane.setVisible(false);
+        showAttendance.setVisible(true);
+        ObservableList<StudentSection> stdntSectionList = FXCollections.observableArrayList();
+
+        String sql = "SELECT id, courseName, courseSec from studentsections where studentName = '" + ApplicationState.currentlyLoggedStudent.getRollNo() + "';";
+        Statement stmt = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = stmt.executeQuery(sql);
+        while(queryResult.next()) {
+            StudentSection studentSectionItem = new StudentSection(queryResult.getInt("id"),
+                    queryResult.getString("courseSec"),queryResult.getString("courseName"));
+            stdntSectionList.add(studentSectionItem);
+        }
+        attSectionCourseMenu.setItems(stdntSectionList);
+    }
+
+    public void ShowData(ActionEvent event) throws SQLException {
+        int id = attSectionCourseMenu.getValue().getId();
+        String sql = "SELECT attendanceDate, IsPresent FROM lms.attendance where studentSectionId = " + id + ";";
+        ObservableList<Attendance> attendanceList = FXCollections.observableArrayList();
+        Statement stmt = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = stmt.executeQuery(sql);
+        while(queryResult.next()) {
+            Attendance atndnd = new Attendance(queryResult.getDate("attendanceDate").toLocalDate(),
+                    queryResult.getBoolean("IsPresent"));
+            attendanceList.add(atndnd);
+        }
+
+        attendanceDate.setCellValueFactory(new PropertyValueFactory<>("attendanceDate"));
+        attendanceStatus.setCellValueFactory(new PropertyValueFactory<>("attendanceStatus"));
+        attendanceTable.setItems(attendanceList);
+
+
     }
 }

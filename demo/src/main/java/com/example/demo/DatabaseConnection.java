@@ -5,6 +5,13 @@ import java.sql.DriverManager;
 public class DatabaseConnection {
     public Connection DatabaseLink;
 
+    private static DatabaseConnection _instance = null;
+
+    private DatabaseConnection()
+    {
+
+    }
+
     public  Connection getConnection(){
         String dbName = "LMS";
         String dbUser = "root";
@@ -19,5 +26,13 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
         return DatabaseLink;
+    }
+
+    public static DatabaseConnection getInstance()
+    {
+        if (_instance == null )
+            _instance = new DatabaseConnection();
+
+        return _instance;
     }
 }

@@ -1,12 +1,12 @@
 package com.example.demo;
 
-public class courseSection {
+public class CourseSectionAttendance {
     private String sectionName;
     private String  courseName;
     private String teacherName;
     private int id;
 
-    public courseSection(String _sectionName,String _courseName,String _teacherName){
+    public CourseSectionAttendance(String _sectionName,String _courseName,String _teacherName){
         sectionName = _sectionName;
         courseName = _courseName;
         teacherName = _teacherName;
@@ -25,8 +25,7 @@ public class courseSection {
     }
     @Override
     public String toString() {
-        return sectionName;
+        return "'" + courseName + "', '" + sectionName + "'" ;
     }
 
-    public String getCourseSection() {return "'" + courseName + "', '" + sectionName + "'" ;}
 }

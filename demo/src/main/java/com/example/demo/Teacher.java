@@ -40,9 +40,35 @@ public class Teacher extends User{
         return sections;
     }
 
+    public ObservableList<CourseSectionAttendance> getCourseSectionAttendance(String sql) throws SQLException {
+        Statement statement = ApplicationState.connectDB.createStatement();
+        ResultSet queryResult = statement.executeQuery(sql);
+
+        ObservableList<CourseSectionAttendance> sections = FXCollections.observableArrayList();
+
+        while (queryResult.next()) {
+            CourseSectionAttendance courseSec = new CourseSectionAttendance(
+                    queryResult.getString("sectionName"),
+                    queryResult.getString("courseName"),
+                    queryResult.getString("teacherName")
+            );
+            sections.add(courseSec);
+        }
+        return sections;
+    }
+
     public void MarkAttendance(int studentSectionId, LocalDate attendanceDate, boolean isPresent) throws SQLException {
         Statement statement = ApplicationState.connectDB.createStatement();
-        String sql = "Insert into Attendance (studentSectionId,attendanceDate,IsPresent) values (" + studentSectionId + ", '" + attendanceDate + "'," + isPresent + ")";
-        statement.executeUpdate(sql);
+        String attendanceAlreadyMarkedSql = "Select count(*) as cnt from Attendance where studentSectionId = " + studentSectionId + " and attendanceDate = '" + attendanceDate + "';";
+        ResultSet queryResult = statement.executeQuery(attendanceAlreadyMarkedSql);
+        queryResult.next();
+        int cnt = queryResult.getInt("cnt");
+        if (cnt == 0) {
+            String sql = "Insert into Attendance (studentSectionId,attendanceDate,IsPresent) values (" + studentSectionId + ", '" + attendanceDate + "'," + isPresent + ")";
+            statement.executeUpdate(sql);
+        }
+        else {
+            throw new SQLException("Attendance is already marked.");
+        }
     }
 }

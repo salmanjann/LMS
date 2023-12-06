@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
    private RadioButton loginRadioAdmin,loginRadioTeacher,loginRadioStudent;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ApplicationState.connectNow = new DatabaseConnection();
+        ApplicationState.connectNow = DatabaseConnection.getInstance();
         ApplicationState.connectDB = ApplicationState.connectNow.getConnection();
     }
    private void switchToAdminScene() throws IOException {

@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 public class TeacherDashboardController implements Initializable {
 
     @FXML
-    public ComboBox<courseSection> attendanceMenu;
+    public ComboBox<CourseSectionAttendance> attendanceMenu;
     @FXML
     public ComboBox<courseSection> viewFeedbackSections;
     @FXML
@@ -104,7 +104,7 @@ public class TeacherDashboardController implements Initializable {
         viewFeedback.setVisible(false);
 
         String sql = "Select courseName, sectionName, teacherName from coursesection cs where cs.teachername = '" + ApplicationState.currentlyLoggedTeacher.getName() + "'";
-        attendanceMenu.setItems(ApplicationState.currentlyLoggedTeacher.getCourseSections(sql));
+        attendanceMenu.setItems(ApplicationState.currentlyLoggedTeacher.getCourseSectionAttendance(sql));
     }
     public void viewFeedbackPane(ActionEvent e) throws SQLException {
         teacherDashPane.setVisible(false);
@@ -113,46 +113,11 @@ public class TeacherDashboardController implements Initializable {
         String sql = "Select courseName, sectionName, teacherName from coursesection cs where cs.teachername = '" + ApplicationState.currentlyLoggedTeacher.getName() + "'";
         viewFeedbackSections.setItems(ApplicationState.currentlyLoggedTeacher.getCourseSections(sql));
     }
-    /*public void markAttendance(ActionEvent e) {
-        ObservableList<approveCourses> mAList = FXCollections.observableArrayList();
-        String getCourses = "SELECT studentName,courseName FROM requestingCourse;";
 
-        try {
-            Statement statement = ApplicationState.connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(getCourses);
-
-            while (queryResult.next()) {
-                String student = queryResult.getString("studentName");
-                String course = queryResult.getString("courseName");
-
-                Button requestButton = createApproveButton(student,course);
-
-                // Create CourseData object and add it to the list
-                approveCourses data = new approveCourses(student,course,requestButton);
-                mAList.add(data);
-            }
-        } catch (Exception w) {
-            w.printStackTrace();
-        }
-        StudentName.setCellValueFactory(new PropertyValueFactory<>("studentName"));
-        RollNo.setCellValueFactory(new PropertyValueFactory<>("courseName"));
-        markedAttendance.setCellValueFactory(new PropertyValueFactory<>("button"));
-        attendanceTable.setItems(mAList);
-    }*/
-   /* private Button createApproveButton(String studentName,String courseName) {
-        Button requestButton = new Button("Approve");
-        requestButton.setOnAction(event -> handleApproveButtonClick(studentName,courseName,requestButton));
-        return requestButton;
-    }
-    private void handleApproveButtonClick(String studentName,String courseName,Button _reqButton) {
-        ApplicationState.currentlyLoggedAdmin.approveBtn(studentName,courseName);
-        _reqButton.setText("Approved");
-    }
-*/
     public void ShowStudents(ActionEvent event) throws SQLException {
         ObservableList<attndStudentTable> attndncdLst = FXCollections.observableArrayList();
         Statement statement = ApplicationState.connectDB.createStatement();
-        courseSection courseSectionSelected = attendanceMenu.getValue();
+        CourseSectionAttendance courseSectionSelected = attendanceMenu.getValue();
         String sql = "Select ss.id, studentName, rollNo from studentsections ss inner join student s on ss.studentname = s.rollno\n" +
                 "where ss.courseSec = '" + courseSectionSelected.getSectionName() + "' and ss.courseName = '"  + courseSectionSelected.getCourseName() + "'";
         ResultSet queryResult = statement.executeQuery(sql);
@@ -191,8 +156,16 @@ public class TeacherDashboardController implements Initializable {
     }
 
     private void handlePresentButtonClick(int studentSectionId,LocalDate attendanceDate,boolean isPresent, Button atndncButton) throws SQLException {
-        ApplicationState.currentlyLoggedTeacher.MarkAttendance(studentSectionId,attendanceDate, isPresent);
-        atndncButton.setText("Marked");
+        try {
+            ApplicationState.currentlyLoggedTeacher.MarkAttendance(studentSectionId, attendanceDate, isPresent);
+            atndncButton.setText("Marked");
+        }
+        catch (SQLException sqe)
+        {
+            Alert alerts = new Alert(Alert.AlertType.INFORMATION,"Attendance already marked.", ButtonType.OK);
+            alerts.showAndWait();
+            atndncButton.setText("Marked");
+        }
     }
     public void ShowFeedback(ActionEvent event) throws SQLException {
         ObservableList<viewFeedbackTable> feedbackList = FXCollections.observableArrayList();
