@@ -46,7 +46,7 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private AnchorPane attendancePane;
     @FXML
-    private Button teacherDashCancel;
+    private Button teacherDashLogout;
     @FXML
     private Label teacherName;
     @FXML
@@ -79,7 +79,7 @@ public class TeacherDashboardController implements Initializable {
             studentStage.initStyle(StageStyle.UNDECORATED);
             studentStage.setScene(new Scene(root, 520, 400));
             studentStage.show();
-            Stage stage = (Stage) teacherDashCancel.getScene().getWindow();
+            Stage stage = (Stage) teacherDashLogout.getScene().getWindow();
             stage.close();
         }
         catch (Exception e){
