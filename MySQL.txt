@@ -20,10 +20,10 @@ CREATE TABLE TEACHER(
 
 CREATE TABLE STUDENT(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    `name` varchar(50),
+    name varchar(50),
     username varchar(50) unique,
     email varchar(50),
-    `password` varchar(50),
+    password varchar(50),
     rollNo varchar(8)
 );
 
@@ -72,6 +72,14 @@ create table requestingCourse(
 	studentName varchar(255) not null,
 	courseName varchar(255) not null
 );
+
+create table Attendance(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    studentSectionid INT,
+    attendanceDate date,
+    IsPresent bit
+);
+
 create table FeedbackStatus(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	studentName varchar(255) not null,
@@ -114,3 +122,4 @@ select * from courseSection;
 select * from studentSections;
 select * from FeedbackStatus;
 select * from FeedbackFormSubmissions;
+

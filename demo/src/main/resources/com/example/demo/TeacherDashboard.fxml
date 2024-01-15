@@ -35,6 +35,11 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: #3876BF;" text="Teacher Dashboard" textFill="WHITE">
+               <font>
+                  <Font name="Calibri" size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="attendancePane" layoutX="180.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF;" visible="false">
@@ -44,10 +49,13 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </Label>
-            <ComboBox fx:id="attendanceMenu" layoutX="120.0" layoutY="60.0" prefWidth="200.0" promptText="Choose Course and Section" />
-            <DatePicker fx:id="attendanceDate" layoutX="120.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Date" />
-            <Button fx:id="PopualateStudents" layoutX="120" layoutY="130" onAction="#ShowStudents" text="Populate Students" />
-            <TableView fx:id="attendanceTable" layoutY="165.0" prefHeight="323.0" prefWidth="340.0">
+            <ComboBox fx:id="attendanceMenu" layoutX="77.0" layoutY="57.0" prefWidth="200.0" promptText="Choose Course and Section" />
+            <DatePicker fx:id="attendanceDate" layoutX="95.0" layoutY="95.0" prefWidth="150.0" promptText="Choose Date" />
+            <Button fx:id="PopualateStudents" layoutX="105.0" layoutY="130.0" onAction="#ShowStudents" style="-fx-background-color: #263F73;" text="Populate Students" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <TableView fx:id="attendanceTable" layoutY="165.0" prefHeight="237.0" prefWidth="340.0">
                <columns>
 
                   <TableColumn fx:id="RollNo" prefWidth="115.99996948242188" text="Roll No" />
